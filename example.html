@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+			
+			body {
+				font-family:Arial;
+			}
+			
+			h1 {
+				margin-bottom:20px;
+			}
+			
+			
+			table {
+				margin-bottom:30px;
+			}
+			
+			table td {
+				border : 1px solid #000;
+				padding:2px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<h1>Shopify Javascript API</h1>
+		<div id="content"></div>
+		<a href="https://github.com/mikedidomizio" target="_blank"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="js/shopify.min.js"></script>
+		<script>
+
+			var shopify = new shopify();
+			
+			//for display purposes
+			function createTable(title,table) {
+				$('#content').append('<h2>'+title+'</h2><table>'+table+'</table>');
+			}
+			
+			
+			//json format of individual item
+			shopify.ajax('feeds/espresso.js',function(results) {
+				var html = '';
+				for(var i in results.results[0]) { 
+					html += '<tr><td>'+i+'</td><td>'+results.results[0][i]+'</td></tr>';
+				}
+				createTable('Returned individual item (espresso feed)',html);
+			},['id','title','handle','type','tags']);
+			
+		
+			//atom feed
+			shopify.ajax('feeds/ipad.atom',function(results) {
+				
+				var html = '';
+				//the first item displayed
+				for(var i in results.results[0]) {
+					html += '<tr><td>'+i+'</td><td>'+results.results[0][i]+'</td></tr>';
+				}
+				createTable('Feed returned, showing first result (ipad feed)',html);
+				
+				
+				//return the titles of the results
+				var titles = results.get('title');
+				var html = '';
+				for(var i = 0; i < titles.length; i++) {
+					html += '<tr><td>'+titles[i]+'</td></tr>';
+				}
+				createTable('Titles of items (ipad feed)',html);
+				
+				
+				//here we sort by title and then sort return the titles of those individual items
+				var ids = results.sortBy('id');
+				var html = '';
+				for(var i = 0; i < ids.results.length; i++) {
+					html += '<tr><td>'+ids.results[i].title+'</td><td>'+ids.results[i].id+'</td></tr>';
+				}
+				createTable('Titles of items when sorted by ID (ipad feed)',html);
+				
+				
+				//here we return titles that contain ipad but do not contain air
+				var query = results.query("title contains 'ipad'","i").query("title !contains 'air'","i").get('title');
+				var html = '';
+				for(var i = 0; i < query.length; i++) {
+					html += '<tr><td>'+query[i]+'</td></tr>';
+				}
+				createTable('Titles that contain "ipad" but do not contain "air" (ipad feed)',html);
+				
+			},['title','id','published'],3600);
+		</script>
+	</body>
+</html>
