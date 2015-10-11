@@ -1,0 +1,58 @@
+{
+   "id": 175697273,
+   "title": "Holiday Celebration Espresso",
+   "handle": "holiday-celebration-espresso-1",
+   "published_at": "2013-11-14T20:57:14-08:00",
+   "created_at": "2013-11-13T14:34:34-08:00",
+   "vendor": "49th Parallel",
+   "type": "Accessories",
+   "tags": [
+       "coffee",
+       "espresso",
+       "honduras"
+    ],
+   "price": 2000,
+   "price_min": 2000,
+   "price_max": 2000,
+   "available": true,
+   "price_varies": false,
+   "compare_at_price": null,
+   "compare_at_price_min": 0,
+   "compare_at_price_max": 0,
+   "compare_at_price_varies": false,
+   "variants": [
+        {
+           "id": 403369425,
+           "title": "Holiday Celebration Espresso",
+           "options": [
+                "Holiday Celebration Espresso"
+            ],
+           "option1": "Holiday Celebration Espresso",
+           "option2": null,
+           "option3": null,
+           "price": 2000,
+           "weight": 454,
+           "compare_at_price": null,
+           "inventory_quantity": 1,
+           "inventory_management": null,
+           "inventory_policy": "deny",
+           "available": true,
+           "sku": "HCE16",
+           "requires_shipping": true,
+           "taxable": false,
+           "barcode": null
+        }
+    ],
+   "images": [
+        "//cdn.shopify.com/s/files/1/0058/4952/products/holidayespresso.png?v=1384382327",
+        "//cdn.shopify.com/s/files/1/0058/4952/products/IMG_5320.jpg?v=1386375270"
+    ],
+   "featured_image": "//cdn.shopify.com/s/files/1/0058/4952/products/holidayespresso.png?v=1384382327",
+   "options": [
+        {
+           "name": "Title",
+           "position": 1
+        }
+    ],
+   "url": "/products/holiday-celebration-espresso-1"
+}
