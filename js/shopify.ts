@@ -161,7 +161,7 @@ class Shopify {
 
                                 } catch(err) {
                                     // error occurred when trying to parse an entry
-                                    // do not rejecr
+                                    // do not reject
                                     console.warn(err)
                                 }
                             }
