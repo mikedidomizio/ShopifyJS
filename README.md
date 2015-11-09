@@ -1,9 +1,5 @@
 <h1>Shopify Javascript API</h1>
 
-*Written by Mike DiDomizio (http://mikedidomizio.com)*
-
-*Licensed under the MIT license: http://opensource.org/licenses/MIT*
-
 Allows AJAX calls to Shopify feeds.  Works locally and can handle JSONP calls
 
 <h2>Examples</h2>
@@ -37,16 +33,6 @@ shopify.ajax("feeds/espresso.json", ['id', 'title', 'handle', 'type', 'tags']).t
 
 This was initially built with PhoneGap in mind
 
-<h2>Change Log</h2>
+Licensed under the MIT license: http://opensource.org/licenses/MIT
 
-1.1
-
-- Created Typescript Shopify file
-- Changed Shopify JS Object into Class
-- Renamed espresso.js to espresso.json
-- Updated example.html to have promises instead of callbacks
-- Updated parameter descriptions for methods
-
-1.0
-
-- Initial commit and code
+Written by Mike DiDomizio (http://mikedidomizio.com)
