@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Mon Nov 09 2015 18:31:17 GMT-0500 (EST)
+// Generated on Tue Nov 10 2015 18:30:01 GMT-0500 (EST)
 
 module.exports = function(config) {
   config.set({
@@ -30,9 +30,6 @@ module.exports = function(config) {
     preprocessors: {
     },
 
-    plugins: [
-        'karma-requirejs'
-    ],
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

@@ -1,0 +1,30 @@
+{
+  "name": "shopifyapi",
+  "version": "1.2.0",
+  "description": "<h1>Shopify Javascript API</h1>",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-typescript": "^2.11.0",
+    "gulp-watch": "^4.3.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikedidomizio/shopifyapi.git"
+  },
+  "author": "Mike DiDomizio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikedidomizio/shopifyapi/issues"
+  },
+  "homepage": "https://github.com/mikedidomizio/shopifyapi#readme"
+}
