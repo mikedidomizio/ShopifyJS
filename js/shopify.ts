@@ -1,10 +1,10 @@
 "use strict";
 /**
- * 
+ *
  * Shopify Javascript API
  * Retrieves ATOM feeds in expected Shopify format
  *
- * @version   1.1
+ * @version   1.2
  * @author    Mike DiDomizio
  * @website   http://mikedidomizio.com
  * @license   This software is licensed under the MIT license: http://opensource.org/licenses/MIT
@@ -16,7 +16,7 @@ class Shopify {
     /**
      * Constructor
      *
-     * @param host|undefined    Domain to call, leaving empty will make local AJAX calls
+     * @param host  string  Domain to call, leaving empty will make local AJAX calls
      */
     constructor(public host: string) {
         this.website = host ? host.trim() : "";
@@ -24,24 +24,23 @@ class Shopify {
     /**
      * Makes an AJAX call to a feed url
      *
-     * @param url               String  The endpoint URL to call
-     * @param retrieveArray     Array   An array of keys of items that we will return
+     * @param url               string  The endpoint URL to call
+     * @param itemsToRetrieve   array   An array of keys of items that we will return
      * @returns Object
      */
-    ajax(url: string, retrieveArray: Array<string>): Object {
-        var self = this,
-            itemsToRetrieve: Array<string> = retrieveArray instanceof Array ? retrieveArray : [];
+    ajax(url: string, itemsToRetrieve: Array<string>): Object {
+        var self = this;
 
         return new Promise(function(resolve, reject) {
 
-            var feedURL:string = self.website + url.trim(),
-                xmlnsS:string = "http://jadedpixel.com/-/spec/shopify";
+            var feedURL: string = self.website + url.trim(),
+                xmlnsS: string = "http://jadedpixel.com/-/spec/shopify",
+                dataType: string = "json";
 
-            if(feedURL.slice(-4).toLowerCase() === 'json') {
-                var dataType: string = "json"
-            } else {
-                var dataType: string = feedURL.match(/\&|\?callback\=\?/) ? 'jsonp' : 'xml';
-            }
+
+            if(feedURL.slice(-4).toLowerCase() !== 'json') {
+                dataType = feedURL.match(/\&|\?callback\=\?/) ? 'jsonp' : 'xml';
+            };
 
             var xmlHttp = new XMLHttpRequest();
 
@@ -49,20 +48,18 @@ class Shopify {
                 if (xmlHttp.readyState === 4) {
                     if(xmlHttp.status === 200) {
 
-                        var data = xmlHttp.responseText,
-                            obj = [];
+                        var data: string = xmlHttp.responseText,
+                            obj: Array<string> = [];
 
-                        //is it coming back in json format?
-                        if(dataType == 'json') {
+                        if(dataType === 'json') { // is it coming back in json format?
 
-                            // convert it to an object
-                            data = JSON.parse(data);
+                            data = JSON.parse(data); // convert it to an object
 
                             if(itemsToRetrieve.length > 0) {
                                 var item: any = {};
 
                                 for(var i in <any>data) {
-                                    if(itemsToRetrieve.indexOf(i) != -1) {
+                                    if(itemsToRetrieve.indexOf(i) !== -1) {
                                         item[i] = data[i];
                                     }
                                 }
@@ -73,13 +70,12 @@ class Shopify {
                             }
                         } else {
 
-                            //if it is a jsonp call, ensure that you know what data you'll be getting back
+                            // if it is a jsonp call, ensure that you know what data you'll be getting back
                             if(dataType === 'jsonp') {
-                                var data:string = decodeURIComponent(data);
+                                data = decodeURIComponent(data);
                             }
 
-                            //there is always a chance for things to go bad with XML
-                            var parser = new DOMParser();
+                            var parser = new DOMParser(); // there is always a chance for things to go bad with XML
                             var xmlDoc = parser.parseFromString(data, "text/xml");
 
                             for(var i in <any>xmlDoc) {
@@ -161,8 +157,7 @@ class Shopify {
 
                                 } catch(err) {
                                     // error occurred when trying to parse an entry
-                                    // do not reject
-                                    console.warn(err)
+                                    console.warn(err); // do not reject
                                 }
                             }
                         }
@@ -172,11 +167,10 @@ class Shopify {
                         reject(xmlHttp.responseText);
                     }
                 }
-            }
+            };
 
             xmlHttp.open("GET", feedURL, true);
             xmlHttp.send(null);
-
         })
     }
 }

@@ -1,57 +1,29 @@
 "use strict";
-/**
- *
- * Shopify Javascript API
- * Retrieves ATOM feeds in expected Shopify format
- *
- * @version   1.1
- * @author    Mike DiDomizio
- * @website   http://mikedidomizio.com
- * @license   This software is licensed under the MIT license: http://opensource.org/licenses/MIT
- * @copyright Mike DiDomizio
- *
- */
 class Shopify {
-    /**
-     * Constructor
-     *
-     * @param host|undefined    Domain to call, leaving empty will make local AJAX calls
-     */
     constructor(host) {
         this.host = host;
         this.website = host ? host.trim() : "";
     }
     ;
-    /**
-     * Makes an AJAX call to a feed url
-     *
-     * @param url               String  The endpoint URL to call
-     * @param retrieveArray     Array   An array of keys of items that we will return
-     * @returns Object
-     */
-    ajax(url, retrieveArray) {
-        var self = this, itemsToRetrieve = retrieveArray instanceof Array ? retrieveArray : [];
+    ajax(url, itemsToRetrieve) {
+        var self = this;
         return new Promise(function (resolve, reject) {
-            var feedURL = self.website + url.trim(), xmlnsS = "http://jadedpixel.com/-/spec/shopify";
-            if (feedURL.slice(-4).toLowerCase() === 'json') {
-                var dataType = "json";
+            var feedURL = self.website + url.trim(), xmlnsS = "http://jadedpixel.com/-/spec/shopify", dataType = "json";
+            if (feedURL.slice(-4).toLowerCase() !== 'json') {
+                dataType = feedURL.match(/\&|\?callback\=\?/) ? 'jsonp' : 'xml';
             }
-            else {
-                var dataType = feedURL.match(/\&|\?callback\=\?/) ? 'jsonp' : 'xml';
-            }
+            ;
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function () {
                 if (xmlHttp.readyState === 4) {
                     if (xmlHttp.status === 200) {
                         var data = xmlHttp.responseText, obj = [];
-                        //is it coming back in json format?
-                        if (dataType == 'json') {
-                            // convert it to an object
+                        if (dataType === 'json') {
                             data = JSON.parse(data);
                             if (itemsToRetrieve.length > 0) {
                                 var item = {};
                                 for (var i in data) {
-                                    if (itemsToRetrieve.indexOf(i) != -1) {
+                                    if (itemsToRetrieve.indexOf(i) !== -1) {
                                         item[i] = data[i];
                                     }
                                 }
@@ -62,11 +34,9 @@ class Shopify {
                             }
                         }
                         else {
-                            //if it is a jsonp call, ensure that you know what data you'll be getting back
                             if (dataType === 'jsonp') {
-                                var data = decodeURIComponent(data);
+                                data = decodeURIComponent(data);
                             }
-                            //there is always a chance for things to go bad with XML
                             var parser = new DOMParser();
                             var xmlDoc = parser.parseFromString(data, "text/xml");
                             for (var i in xmlDoc) {
@@ -119,7 +89,6 @@ class Shopify {
                                                                     break;
                                                             }
                                                         }
-                                                        // Adds the item to the object
                                                         obj.push(item);
                                                     }
                                                 }
@@ -128,8 +97,6 @@ class Shopify {
                                     }
                                 }
                                 catch (err) {
-                                    // error occurred when trying to parse an entry
-                                    // do not reject
                                     console.warn(err);
                                 }
                             }

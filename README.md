@@ -4,18 +4,17 @@
 
 *Licensed under the MIT license: http://opensource.org/licenses/MIT*
 
-Allows AJAX calls to Shopify feeds.  Works locally and can handle JSONP calls
+Retrieve Shopify feeds by AJAX request.  Works locally and can handle JSONP calls.
 
 <h2>Examples</h2>
-http://mikedidomizio.com/work/shopify
+http://mikedidomizio.com/work/shopify (1.2)
 
 <h2>Usage</h2>
 
 The Shopify Javascript API allows you to access JSON/ATOM/XML feeds
 
 ```javascript
-//the base url, if all calls will be local, it might as well be set here
-var shopify = new Shopify('http://mysite.com/');
+var shopify = new Shopify('http://mysite.com/'); //the base url, if all calls will be local, it might as well be set here
 
 //here we have the feed relative to the base url.  http://mysite.com/dir/myFeed.atom will be called in this example
 // The first parameter is the URL.  
@@ -33,13 +32,27 @@ shopify.ajax("feeds/espresso.json", ['id', 'title', 'handle', 'type', 'tags']).t
 
 ```
 
-<h2>Notes</h2>
+<h2>Development</h2>
 
-This was initially built with PhoneGap in mind
+ShopifyJS uses Gulp.
+Inside the folder run:
+
+```javascript
+npm install && gulp watch
+```
 
 <h2>Change Log</h2>
 
-1.1
+<h5>1.2</h5>
+
+- Added browsersync support for development
+- Minor code clean up
+
+Fixes:
+- Fixed watcher for Gulp file
+- Fixed package.json dependencies
+
+<h5>1.1</h5>
 
 - Created Typescript Shopify file
 - Changed Shopify JS Object into Class
@@ -47,6 +60,6 @@ This was initially built with PhoneGap in mind
 - Updated example.html to have promises instead of callbacks
 - Updated parameter descriptions for methods
 
-1.0
+<h5>1.0</h5>
 
 - Initial commit and code
